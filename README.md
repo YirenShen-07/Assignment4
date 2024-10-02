@@ -19,6 +19,7 @@ This dataset is a Heart attack possibility dataset containing the health status 
 
 ### Model
 In this project, I first preprocessed the dataset to ensure that each feature data type was appropriate, missing values were handled, and the dataset was divided into a training set and a test set. To predict the likelihood of a heart attack, I used three methods from the imodels library: the **RuleFit rule set**, **Greedy tree sums (FIGS)**, and **Greedy rule tree (CART)**.
+
 **RuleFit rule set:** RuleFit is an algorithm that combines linear models and decision rules. I train the linear model by extracting decision rules from the training data and adding these rules as new features to the original data. With this approach, an easily interpretable model output is obtained while incorporating the regularized representation of decision trees.
 
 **Greedy tree sums (FIGS):** FIGS (Fast Interpretable Greedy Tree Sums) is a fast and easy-to-interpret algorithm that uses a greedy algorithm to construct multiple decision trees and sum their predictions. I chose this algorithm because it strikes a balance between complexity and interpretability.FIGS is able to provide a high level of accuracy while keeping the model simple and interpretable, making each prediction step of the model traceable.
