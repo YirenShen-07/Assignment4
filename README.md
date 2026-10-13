@@ -19,7 +19,7 @@ Training/test separation, scaling fitted on the training set, classification rep
 These are saved outputs from one 70/30 split with random_state=42 and 91 test observations. They have not been reproduced in a clean environment.
 
 ## Explore and run
-The repository includes heart.csv and a notebook. Use the included CSV instead of the personal Google Drive path. Install the imported dependencies, correct the course-template setup paths, and run the notebook in order.
+The repository includes heart.csv and [the notebook](interpretable_heart_disease.ipynb). Use the included CSV instead of the personal Google Drive path. Install the imported dependencies, correct the course-template setup paths, and run the notebook in order.
 
 ## Limitations and next steps
 - Verify the original dataset source, class labels, and whether the target represents heart disease or another endpoint.
