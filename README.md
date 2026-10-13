@@ -1,31 +1,43 @@
 # Interpretable Heart Disease Classification
 
-An educational comparison of RuleFit, Fast Interpretable Greedy Tree Sums (FIGS), and CART on a heart-related binary classification dataset.
+An educational comparison of RuleFit, FIGS and CART on Cleveland-derived records, with an explicit source-label audit.
 
-## Analytical value
-Compare predictive performance with readable rules and tree structures. This demonstrates model evaluation and communication of accuracy–interpretability tradeoffs.
+## Critical label correction
+All 303 bundled records were matched to the original UCI Cleveland data on eight unchanged measurements. **Bundled target=1 corresponds to absence (UCI num=0); bundled target=0 corresponds to presence (num>0).** The analysis therefore uses disease_present=1-target. This is disease-presence classification, not forecasting a future heart attack.
 
-## Technical strengths
-Python, Pandas, scikit-learn, imodels, Matplotlib, and Graphviz.
-Training/test separation, scaling fitted on the training set, classification reports, confusion matrices, extracted rules, and ROC analysis.
+[Label audit](reports/label_audit.json) · [Data dictionary and coding mappings](DATA.md)
 
-## Saved results
-| Model | Test accuracy | ROC-AUC |
-| --- | --- | --- |
-| RuleFit | 82.42% | Not reported |
-| FIGS | 79.12% | 0.8685 |
-| CART | Approximately 71% | Not reported |
+## Model comparison
+| Model | Accuracy | Disease precision | Disease recall | Disease F1 | ROC-AUC | Train CV AUC mean | Train CV AUC std |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Majority baseline | 0.5385 | 0.0000 | 0.0000 | 0.0000 | 0.5000 | 0.5000 | 0.0000 |
+| RuleFit | 0.8022 | 0.9000 | 0.6429 | 0.7500 | 0.8875 | 0.8976 | 0.0075 |
+| FIGS | 0.7692 | 0.7442 | 0.7619 | 0.7529 | 0.8540 | 0.8190 | 0.0313 |
+| CART | 0.7253 | 0.7073 | 0.6905 | 0.6988 | 0.7770 | 0.8476 | 0.0551 |
 
-These are saved outputs from one 70/30 split with random_state=42 and 91 test observations. They have not been reproduced in a clean environment.
+One duplicate is removed before the stratified 70/30 split: 302 distinct rows, 211 training and **91 test records**. Seed 42, threshold 0.5. Three-fold stratified CV is confined to training data. Fixed model settings are used. These updated results replace the earlier coursework outputs; the corrected target, deduplication and split are documented in [run metadata](reports/run.json).
 
-## Explore and run
-The repository includes heart.csv and [the notebook](interpretable_heart_disease.ipynb). Use the included CSV instead of the personal Google Drive path. Install the imported dependencies, correct the course-template setup paths, and run the notebook in order.
+Missing mirror codes ca=4 and thal=0 are converted to missing values and imputed inside each training fold. Library RuleFitClassifier replaces the unused custom implementation. Inputs retain original units and named features.
 
-## Limitations and next steps
-- Verify the original dataset source, class labels, and whether the target represents heart disease or another endpoint.
-- Remove unused custom RuleFit code; the executed model uses the library's RuleFitClassifier.
-- Add repeated or stratified validation and show rules with actual feature names and units.
-- Pin dependencies and clean the initialization cells.
+![ROC comparison](reports/roc_comparison.png)
+![RuleFit confusion matrix](reports/confusion_matrix.png)
+![CART rules](reports/cart_rules.png)
+
+Readable RuleFit, FIGS and CART rule exports are in [reports/](reports/). Small-sample validation and disease recall matter alongside AUC; these results do not establish clinical validity.
+
+## Run
+```bash
+git clone https://github.com/YirenShen-07/HeartDiseaseModels.git
+cd HeartDiseaseModels
+python -m venv .venv
+# macOS / Linux:
+source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python verify_labels.py
+python analyze.py
+```
+Tested with Python 3.12. Modeling reads the bundled heart.csv directly; no Drive or course-template directory is needed. Source audit downloads the original UCI file. [Notebook](interpretable_heart_disease.ipynb) · [DATA.md](DATA.md).
 
 ## Project context
-Developed by Yiren Shen for Duke's AIPI 590 Explainable AI course. This is a teaching project; clinical performance and deployment have not been established.
+Original Duke AIPI 590 model-comparison project by Yiren Shen, updated with AI-assisted reproducibility and label corrections in 2026. This is a teaching exercise, not a validated clinical tool.

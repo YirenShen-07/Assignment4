@@ -1,0 +1,9 @@
+{
+  "rows_matched": 303,
+  "inverted_target_agreement": 1.0,
+  "original_source": "https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data",
+  "original_sha256": "a74b7efa387bc9d108d7d0115d831fe9b414b29ae7124f331b622b4efa0427c8",
+  "bundled_sha256": "7c3014365675306819510a49ff289efbec1d1a6a666a2dc7652f1547b383d859",
+  "mapping": "bundled target 1 = UCI num 0 (absence); bundled target 0 = UCI num >0 (presence)",
+  "analysis_target": "disease_present = 1 - bundled target"
+}
